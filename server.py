@@ -1,4 +1,5 @@
 import socket
+import random
 
 HOST = '192.168.50.245' #NEEDS TO BE CHANGED FOR EACH HOST
 PORT = 4207
