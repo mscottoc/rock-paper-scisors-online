@@ -1,6 +1,6 @@
 import socket
 
-HOST = '192.168.50.245' #NEEDS TO BE CHANGED FOR EACH HOST
+HOST = '10.244.13.236' #NEEDS TO BE CHANGED FOR EACH HOST
 PORT = 4207
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,4 +22,17 @@ while continue_game:
             input_valid = True
     socket.send(local_turn.encode('utf-8'))
     print("They chose:", socket.recv(1024).decode('utf-8'))
+    local_score = int(socket.recv(1024).decode('utf-8'))
+    remote_score = int(socket.recv(1024).decode('utf-8'))
+    turn = int(socket.recv(1024).decode('utf-8'))
+    print(f"Your Score: {local_score}\nTheir Score: {remote_score}\nTurn: {turn}")
+
+    if turn >= 3 and local_score != remote_score:
+        continue_game = False
+print("Game Over")
+if local_score > remote_score:
+    print("you win!")
+else:
+    print("you lose :(")
+
     
