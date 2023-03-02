@@ -1,5 +1,6 @@
 import socket
 import random
+import json
 
 HOST = '10.244.13.236' #NEEDS TO BE CHANGED FOR EACH HOST
 PORT = 4207
@@ -19,7 +20,7 @@ while True:
     print(f"Connected to {address}")
 
     continue_game = True
-
+    usr_name = client_socket.recv(1024).decode('utf-8').upper()
     while continue_game:
         turn += 1
 
@@ -66,6 +67,43 @@ while True:
         if turn >= 3 and p_one_score != p_two_score:
             continue_game = False
             print("game end")
+    
+    try:
+        f = open("score-sheet.json", 'r')
+        score_sheet = json.loads(f.read())
+        f.close
+    except:
+        score_sheet = {}
+    print(score_sheet)
+    if p_one_score > p_two_score:
+        if score_sheet.get(usr_name) is None:
+            new_score = {
+                usr_name : {
+                "loss" : 0,
+                "win" : 1
+                }
+            }
+            score_sheet.update(new_score)
+        else:
+            score_sheet[usr_name]["win"] += 1
+    elif p_two_score > p_one_score:
+        if score_sheet.get(usr_name) is None:
+            new_score = {
+                usr_name : {
+                "loss" : 1,
+                "win" : 0
+                }
+            }
+            score_sheet.update(new_score)
+        else:
+            score_sheet[usr_name]["loss"] += 1
+
+    f = open("score-sheet.json", 'w')
+    f.write(json.dumps(score_sheet))
+    f.close()
+    client_socket.send(str(score_sheet[usr_name]["win"]).encode('utf-8'))
+    client_socket.send(str(score_sheet[usr_name]["loss"]).encode('utf-8'))
+
 
 
         

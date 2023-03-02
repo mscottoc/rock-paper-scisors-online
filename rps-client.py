@@ -10,6 +10,7 @@ print("RULES: rock beats scissors, scissors beats paper, paper beats rock.")
 print("The rules are best out of three.")
 print("If you tie after three rounds, the game will keep going until one of you win.")
 usr_name = input("What is your username?\n> ")
+socket.send(usr_name.encode('utf-8'))
 
 continue_game = True
 while continue_game:
@@ -34,5 +35,5 @@ if local_score > remote_score:
     print("you win!")
 else:
     print("you lose :(")
-
+print(f"You have {socket.recv(1024).decode('utf-8')} win(s) and {socket.recv(1024).decode('utf-8')} loss(es).")
     
