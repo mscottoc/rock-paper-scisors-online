@@ -34,8 +34,8 @@ while True:
         else:
             print("woopsie!", cpu_turn)
             assert(False)
-        
         player_turn = client_socket.recv(1024).decode('utf-8')
+        print(f"Server chose {cpu_turn}")
         print(player_turn)
         client_socket.send(cpu_turn.encode('utf-8'))
         if player_turn == cpu_turn:
@@ -60,10 +60,13 @@ while True:
         print(p_one_score,'|',p_two_score,'|', turn)
         client_socket.send(str(p_one_score).encode('utf-8'))
         print("player score sent")
+        print(client_socket.recv(1024).decode('utf-8'))
         client_socket.send(str(p_two_score).encode('utf-8'))
         print("player score sent")
+        print(client_socket.recv(1024).decode('utf-8'))
         client_socket.send(str(turn).encode('utf-8'))
         print("turn sent")
+        print(client_socket.recv(1024).decode('utf-8'))
         if turn >= 3 and p_one_score != p_two_score:
             continue_game = False
             print("game end")
@@ -74,7 +77,6 @@ while True:
         f.close
     except:
         score_sheet = {}
-    print(score_sheet)
     if p_one_score > p_two_score:
         if score_sheet.get(usr_name) is None:
             new_score = {
@@ -97,7 +99,7 @@ while True:
             score_sheet.update(new_score)
         else:
             score_sheet[usr_name]["loss"] += 1
-
+    print(score_sheet)
     f = open("score-sheet.json", 'w')
     f.write(json.dumps(score_sheet))
     f.close()
