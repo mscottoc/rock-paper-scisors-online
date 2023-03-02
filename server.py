@@ -1,7 +1,7 @@
 import socket
 import random
 
-HOST = '10.244.13.236' #NEEDS TO BE CHANGED FOR EACH HOST
+HOST = '192.168.50.245' #NEEDS TO BE CHANGED FOR EACH HOST
 PORT = 4207
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
