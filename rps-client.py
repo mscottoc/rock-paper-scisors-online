@@ -1,16 +1,15 @@
 import socket
 
-HOST = '192.168.50.245' #NEEDS TO BE CHANGED FOR EACH HOST
 PORT = 4207
 
-socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-socket.connect((HOST, PORT))
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.connect((socket.gethostname(), PORT))
 
 print("RULES: rock beats scissors, scissors beats paper, paper beats rock.")
 print("The rules are best out of three.")
 print("If you tie after three rounds, the game will keep going until one of you win.")
 usr_name = input("What is your username?\n> ")
-socket.send(usr_name.encode('utf-8'))
+server_socket.send(usr_name.encode('utf-8'))
 
 continue_game = True
 while continue_game:
@@ -21,14 +20,14 @@ while continue_game:
             print("Input not valid! make sure to write the whole word lowercase.")
         else:
             input_valid = True
-    socket.send(local_turn.encode('utf-8'))
-    print("They chose:", socket.recv(1024).decode('utf-8'))
-    local_score = int(socket.recv(1024).decode('utf-8'))
-    socket.send("local score received".encode('utf-8'))
-    remote_score = int(socket.recv(1024).decode('utf-8'))
-    socket.send("remote score received".encode('utf-8'))
-    turn = int(socket.recv(1024).decode('utf-8'))
-    socket.send("turn received".encode('utf-8'))
+    server_socket.send(local_turn.encode('utf-8'))
+    print("They chose:", server_socket.recv(1024).decode('utf-8'))
+    local_score = int(server_socket.recv(1024).decode('utf-8'))
+    server_socket.send("local score received".encode('utf-8'))
+    remote_score = int(server_socket.recv(1024).decode('utf-8'))
+    server_socket.send("remote score received".encode('utf-8'))
+    turn = int(server_socket.recv(1024).decode('utf-8'))
+    server_socket.send("turn received".encode('utf-8'))
     print(f"Your Score: {local_score}\nTheir Score: {remote_score}\nTurn: {turn}")
 
     if turn >= 3 and local_score != remote_score:
@@ -38,5 +37,5 @@ if local_score > remote_score:
     print("you win!")
 else:
     print("you lose :(")
-print(f"You have {socket.recv(1024).decode('utf-8')} win(s) and {socket.recv(1024).decode('utf-8')} loss(es).")
+print(f"You have {server_socket.recv(1024).decode('utf-8')} win(s) and {server_socket.recv(1024).decode('utf-8')} loss(es).")
     

@@ -7,17 +7,11 @@ print("If you tie after three rounds, the game will keep going until one of you 
 usr_name = input("What is your username?\n> ")
 while not end_program:
     try:
-        HOST = '192.168.50.245' #NEEDS TO BE CHANGED FOR EACH HOST
-        PORT = 4207
-
         remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        remote_socket.connect((HOST, PORT))
+        remote_socket.connect((socket.gethostname(), 4207))
     except:
-        HOST = '192.168.50.245' #NEEDS TO BE CHANGED FOR EACH HOST
-        PORT = 4207
-
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        server.bind((HOST, PORT))
+        server.bind((socket.gethostname(), 4207))
 
         server.listen(5)
         remote_socket, address = server.accept()
