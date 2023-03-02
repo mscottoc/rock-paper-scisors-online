@@ -6,8 +6,8 @@ print("The rules are best out of three.")
 print("If you tie after three rounds, the game will keep going until one of you win.")
 usr_name = input("What is your username?\n> ")
 while not end_program:
-    if input("Host of client? h/c\n> ") == 'c':
-        HOST = input("input the server address\n> ")
+    if input("Host or client? h/c\n> ") == 'c':
+        HOST = input("input the host address\n> ")
         remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         remote_socket.connect((HOST, 4207))
     else:

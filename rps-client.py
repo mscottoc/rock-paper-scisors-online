@@ -1,7 +1,7 @@
 import socket
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.connect(('192.168.50.245', 4207)) #change IP to match host
+server_socket.connect((input("input the host address\n> "), 4207))
 
 print("RULES: rock beats scissors, scissors beats paper, paper beats rock.")
 print("The rules are best out of three.")

@@ -2,8 +2,10 @@ import socket
 import random
 import json
 
+HOST = socket.gethostbyname(socket.gethostname())
+print("Server IP:", HOST)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('192.168.50.245', 4207))
+server.bind((HOST, 4207))
 
 server.listen(5)
 random.seed()
