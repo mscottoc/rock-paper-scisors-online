@@ -6,18 +6,19 @@ print("The rules are best out of three.")
 print("If you tie after three rounds, the game will keep going until one of you win.")
 usr_name = input("What is your username?\n> ")
 while not end_program:
-    try:
+    if input("Host of client? h/c\n> ") == 'c':
+        HOST = input("input the server address\n> ")
         remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        if socket.gethostbyname(socket.gethostname()) == '192.168.50.24': #tries different addresses so the same code can run on both machines
-            remote_socket.connect(('192.168.50.245', 4207)) 
-        else:
-            remote_socket.connect(('192.168.50.24', 4207))
-    except:
+        remote_socket.connect((HOST, 4207))
+    else:
+        HOST = socket.gethostbyname(socket.gethostname())
+        print("Your host IP is", HOST)
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        server.bind((socket.gethostname(), 4207))
+        server.bind((HOST, 4207))
 
         server.listen(5)
         remote_socket, address = server.accept()
+
     while not end_program:
         local_score = 0
         remote_score = 0
