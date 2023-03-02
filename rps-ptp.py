@@ -8,7 +8,7 @@ usr_name = input("What is your username?\n> ")
 while not end_program:
     try:
         remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        remote_socket.connect((socket.gethostname(), 4207))
+        remote_socket.connect(('192.168.50.245', 4207))
     except:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((socket.gethostname(), 4207))

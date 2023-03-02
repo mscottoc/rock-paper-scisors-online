@@ -3,7 +3,7 @@ import random
 import json
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((socket.gethostname(), 4207))
+server.bind(('192.168.50.245', 4207))
 
 server.listen(5)
 random.seed()
