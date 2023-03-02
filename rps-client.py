@@ -23,9 +23,12 @@ while continue_game:
             input_valid = True
     socket.send(local_turn.encode('utf-8'))
     print("They chose:", socket.recv(1024).decode('utf-8'))
-    local_score = int(socket.recv(1024).decode('utf-8'))
-    remote_score = int(socket.recv(1024).decode('utf-8'))
-    turn = int(socket.recv(1024).decode('utf-8'))
+    local_score = socket.recv(1024).decode('utf-8')
+    local_score = int(local_score)
+    remote_score = socket.recv(1024).decode('utf-8')
+    remote_score = int(remote_score)
+    turn = socket.recv(1024).decode('utf-8')
+    turn = int(turn)
     print(f"Your Score: {local_score}\nTheir Score: {remote_score}\nTurn: {turn}")
 
     if turn >= 3 and local_score != remote_score:
